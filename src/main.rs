@@ -249,7 +249,7 @@ impl Rom {
         // TODO: Actually parse the ROM header!
         let prg_rom: Vec<u8> = rom_file
             .bytes()
-            .skip(10)
+            .skip(16)
             .take(16_384)
             .collect::<Result<Vec<u8>, _>>()
             .unwrap();
@@ -270,8 +270,8 @@ struct Cpu {
 }
 
 fn main() {
-    let rom = sample_rom();
-    //let rom = Rom::from_file("sample.nes");
+    //let rom = sample_rom();
+    let rom = Rom::from_file("tests/sample.nes");
     let nes = Nes::from_rom(rom);
 
     let mut nes_run = nes.run();
