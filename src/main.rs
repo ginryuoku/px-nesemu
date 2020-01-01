@@ -270,7 +270,6 @@ struct Cpu {
 }
 
 fn main() {
-    //let rom = sample_rom();
     let rom = Rom::from_file("tests/sample.nes");
     let nes = Nes::from_rom(rom);
 
@@ -286,24 +285,4 @@ fn main() {
             }
         }
     }
-}
-
-fn sample_rom() -> Rom {
-    let interrupt_vectors = vec![0x00, 0x00, 0x00, 0x80, 0x00, 0x00];
-    let program = vec![
-        0xA9, 0x05,
-        0x69, 0x06,
-        0xAA,
-        0x86, 0x01,
-        0xA5, 0x01,
-        0x4C, 0x09, 0x80,
-    ];
-    let prg_rom: Vec<u8> = program.into_iter()  // Program bytes
-        .chain(std::iter::repeat(0))            // ...padded with zeros
-        .take(0x4000 - interrupt_vectors.len()) // ...to fill 16 KiB - 6 bytes
-        .chain(interrupt_vectors)               // ...followed by interrupt vectors
-        .collect();                             // ...put into a vector of bytes
-        
-    // This is equivalent to loading our sample.nes file!
-    Rom { prg_rom }
 }
